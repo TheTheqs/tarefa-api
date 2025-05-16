@@ -39,4 +39,13 @@ public class TarefaController {
     public ResponseEntity<List<Tarefa>> encontrarTodasAsTarefas() {
         return ResponseEntity.ok(tarefaService.encontrarTodasAsTarefas());
     }
+
+    //U - Atualizar tarefa
+    @PutMapping("/{id}")
+    public ResponseEntity<TarefaResponseDTO> atualizarTarefa(@RequestBody @Valid CriarTarefaDTO dto, @PathVariable Long id) {
+        TarefaResponseDTO resposta = new TarefaResponseDTO(
+                "Tarefa atualizada com sucesso!",
+                tarefaService.atualizarTarefa(id, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(resposta);
+    }
 }

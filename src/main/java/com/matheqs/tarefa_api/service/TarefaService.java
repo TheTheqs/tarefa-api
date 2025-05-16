@@ -26,11 +26,22 @@ public class TarefaService {
     //R - Ler (Read)
     public Tarefa encontrarTarefaPorId(Long id) {
         return tarefaRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException("Não há tarefa n banco de dados com o id fornecido: id = " + id )
+                () -> new NoSuchElementException("Não há tarefa no banco de dados com o id fornecido: id = " + id )
         );
     }
 
     public List<Tarefa> encontrarTodasAsTarefas() {
         return tarefaRepository.findAll();
+    }
+
+    //U - Atualizar (Update)
+    public Tarefa atualizarTarefa(Long id, CriarTarefaDTO dto) {
+        Tarefa tarefa = tarefaRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Erro ao atualizar, não há tarefa no banco de dados com o id fornecido: id = " + id )
+        );
+        tarefa.setNome(dto.getNome());
+        tarefa.setDataEntrega(dto.getDataEntrega());
+        tarefa.setResponsavel(dto.getResponsavel());
+        return tarefaRepository.save(tarefa);
     }
 }
