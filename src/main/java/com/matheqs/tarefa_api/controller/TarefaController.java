@@ -1,16 +1,28 @@
 package com.matheqs.tarefa_api.controller;
 
+import com.matheqs.tarefa_api.dto.CriarTarefaDTO;
+import com.matheqs.tarefa_api.dto.TarefaResponseDTO;
+import com.matheqs.tarefa_api.service.TarefaService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tarefa")
 public class TarefaController {
+    private final TarefaService tarefaService;
 
-    @GetMapping
-    public ResponseEntity<String> helloWorld() {
-        return ResponseEntity.ok("Hello world");
+    public TarefaController(TarefaService tarefaService) {
+        this.tarefaService = tarefaService;
+    }
+
+    //C - Criar Tarefa
+    @PostMapping
+    public ResponseEntity<TarefaResponseDTO> criarTarefa(@RequestBody @Valid CriarTarefaDTO dto) {
+        TarefaResponseDTO resposta = new TarefaResponseDTO(
+                "Tarefa criada com sucesso!",
+                tarefaService.criarTarefa(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
 }
