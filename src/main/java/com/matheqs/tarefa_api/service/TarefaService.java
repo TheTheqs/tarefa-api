@@ -5,6 +5,9 @@ import com.matheqs.tarefa_api.model.Tarefa;
 import com.matheqs.tarefa_api.repository.TarefaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 @Service
 public class TarefaService {
 
@@ -14,9 +17,20 @@ public class TarefaService {
         this.tarefaRepository = tarefaRepository;
     }
 
-    //C - Criar
+    //C - Criar (Create)
     public Tarefa criarTarefa(CriarTarefaDTO dto) {
         Tarefa tarefa = new Tarefa(dto.getNome(), dto.getDataEntrega(), dto.getResponsavel());
         return tarefaRepository.save(tarefa);
+    }
+
+    //R - Ler (Read)
+    public Tarefa encontrarTarefaPorId(Long id) {
+        return tarefaRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Não há tarefa n banco de dados com o id fornecido: id = " + id )
+        );
+    }
+
+    public List<Tarefa> encontrarTodasAsTarefas() {
+        return tarefaRepository.findAll();
     }
 }
