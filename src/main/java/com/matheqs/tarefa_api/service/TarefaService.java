@@ -44,4 +44,11 @@ public class TarefaService {
         tarefa.setResponsavel(dto.getResponsavel());
         return tarefaRepository.save(tarefa);
     }
+
+    //D - Deletar
+    public void deletarTarefa(Long id) {
+        Tarefa tarefa = tarefaRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Erro ao deletar, tarefa não encontrada com id = " + id));
+        tarefaRepository.delete(tarefa);
+    }
 }

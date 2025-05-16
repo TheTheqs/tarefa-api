@@ -48,4 +48,11 @@ public class TarefaController {
                 tarefaService.atualizarTarefa(id, dto));
         return ResponseEntity.status(HttpStatus.OK).body(resposta);
     }
+
+    //D - DESTRUIR!!!
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarTarefa(@PathVariable Long id) {
+        tarefaService.deletarTarefa(id);
+        return ResponseEntity.noContent().build();
+    }
 }
